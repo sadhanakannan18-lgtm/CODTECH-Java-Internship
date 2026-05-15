@@ -1,1 +1,46 @@
 Task 3 files
+import java.io.*;
+import java.net.*;
+
+public class Server {
+
+    public static void main(String[] args) {
+
+        try {
+
+            ServerSocket serverSocket = new ServerSocket(5000);
+
+            System.out.println("Server Started...");
+
+            Socket socket = serverSocket.accept();
+
+            System.out.println("Client Connected");
+
+            BufferedReader input = new BufferedReader(
+                    new InputStreamReader(socket.getInputStream()));
+
+            PrintWriter output =
+                    new PrintWriter(socket.getOutputStream(), true);
+
+            BufferedReader console =
+                    new BufferedReader(new InputStreamReader(System.in));
+
+            String message;
+
+            while (true) {
+
+                message = input.readLine();
+
+                System.out.println("Client: " + message);
+
+                String reply = console.readLine();
+
+                output.println(reply);
+            }
+
+        } catch (Exception e) {
+
+            System.out.println(e);
+        }
+    }
+}
